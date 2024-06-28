@@ -221,3 +221,41 @@ console.log('set', removeDuplicates(sortedArr));
 // const nums1 = [1, 2, 6, 8]
 // const nums2 = [0, 2, 9]
 // Merge 2 sorted array, return a new sorted array: [0, 1, 2, 2, 6, 8, 9]
+
+// switch case
+
+function checkError(errorCode) {
+  let errMsg = [];
+  switch (errorCode) {
+    case -999:
+      errMsg.push('Unknown error');
+      break;
+    case 1001:
+    case 1002:
+      errMsg.push('Your product does not exist');
+      break;
+    case 1003:
+      errMsg.push('Your product sold out');
+      break;
+    default:
+      '';
+      break;
+  }
+  return errMsg;
+}
+
+console.log('checkError ', checkError(1001));
+const errorMessages = {
+  '-999': 'Unknown error',
+  1001: 'Your product does not exist',
+  1002: 'Your product does not exist',
+  1003: 'Your product sold out',
+  default: 'Text error',
+};
+
+function getErrMsg(errorCode) {
+  // -999
+  return errorMessages[errorCode] || errorMessages.default; // undefined
+}
+
+console.log('getErrMsg ', getErrMsg(1005));
