@@ -89,7 +89,7 @@ const totalQuantity = products.reduce((total, item) => {
 console.log('newInfo2 ', newInfo2);
 console.log('totalQuantity ', totalQuantity);
 
-const currentArr = [1, 4, 6, 7, 9]; // 5
+const currentArr = [1, 4, 3, 6, 7, 9, 5]; // 5
 
 // push, pop, shift, unshift
 currentArr.push(9);
@@ -115,3 +115,147 @@ console.log('currentArr ', currentArr);
 // function (arr, x) { }
 
 // 2. output: { total: quantity, products: [{name: '', color: ''}] }
+
+// reverse
+currentArr.reverse();
+console.log(currentArr);
+
+console.log(currentArr.some((item) => item === 10)); // true, false
+
+currentArr.sort((a, b) => b - a); // ['anna', 'aboy', 'delete']
+console.log('currentArr sort ', currentArr);
+
+const obj = {
+  name: '',
+  age: 7,
+}; // obj.hasProperty('name')
+// if(String(obj) === '{}')
+
+const keys = Object.keys(obj); // ['name', 'age'] O(n) // ['0', '1', '2', '3']
+
+if (currentArr.includes(4)) {
+  // O(n)
+}
+
+const newArr = currentArr.concat([1, 4]);
+const newArr2 = [...currentArr, ...[1, 4]];
+console.log('newArr', newArr);
+
+const initialArr = [3, 4, 3, 3, 5, 1, 1, 5];
+// remove duplicated numbers: [3, 4, 5, 1]
+
+function removeDuplicatedNumber(arr) {
+  const res = []; // O(1)
+  arr.forEach((item) => {
+    // O(n)
+    if (!res.includes(item)) {
+      // O(n)
+      res.push(item);
+    }
+  });
+  return res;
+} // O(n^2)
+
+function removeDupNum2(arr) {
+  const obj = {}; //
+  const res = []; //
+  arr.forEach((item) => {
+    // O(n)
+    if (!obj[item]) {
+      obj[item] = 1;
+      res.push(item);
+    } else {
+      obj[item] += 1;
+    }
+  });
+  return res;
+} // O(n)
+
+console.log(removeDupNum2(initialArr));
+
+// fibonacci: 1 1 2 3 5 8 13 21 ....
+// n = 5 => 8
+function fibN(n) {
+  if (n <= 2) return n;
+  return fibN(n - 1) + fibN(n - 2);
+} // O(2^n)
+// fibN(4) = fibN(3) + fibN(2)
+// fibN(3) = fibN(2) + fibN(1)
+// fibN(2) ==
+function fibN2(n, memo = {}) {
+  //
+  if (n <= 2) return n;
+  if (memo[n]) return memo[n]; // n-2
+  memo[n] = fibN2(n - 1, memo) + fibN2(n - 2, memo);
+  return memo[n];
+} // O(n)
+
+// console.log('fibN2 ', fibN2(40));
+// console.log('fibN ', fibN(40));
+
+const sortedArr = [1, 2, 2, 4, 4, 6, 6, 7];
+// [1, 2, 4, 6, 7]
+
+// Set
+function removeDuplicates(arr) {
+  const resArr = [];
+  let crrIndex = -1;
+  arr.forEach((item, index) => {
+    // O(n)
+    if (index === 0 || resArr[crrIndex] !== item) {
+      resArr.push(item);
+      crrIndex++;
+    }
+  });
+  return resArr;
+  // return new Set(arr); // O(n)
+}
+
+console.log('set', removeDuplicates(sortedArr));
+// Map
+// WeakMap
+// Set
+
+// Homework:
+// Given 2 sorted arrays
+// const nums1 = [1, 2, 6, 8]
+// const nums2 = [0, 2, 9]
+// Merge 2 sorted array, return a new sorted array: [0, 1, 2, 2, 6, 8, 9]
+
+// switch case
+
+function checkError(errorCode) {
+  let errMsg = [];
+  switch (errorCode) {
+    case -999:
+      errMsg.push('Unknown error');
+      break;
+    case 1001:
+    case 1002:
+      errMsg.push('Your product does not exist');
+      break;
+    case 1003:
+      errMsg.push('Your product sold out');
+      break;
+    default:
+      '';
+      break;
+  }
+  return errMsg;
+}
+
+console.log('checkError ', checkError(1001));
+const errorMessages = {
+  '-999': 'Unknown error',
+  1001: 'Your product does not exist',
+  1002: 'Your product does not exist',
+  1003: 'Your product sold out',
+  default: 'Text error',
+};
+
+function getErrMsg(errorCode) {
+  // -999
+  return errorMessages[errorCode] || errorMessages.default; // undefined
+}
+
+console.log('getErrMsg ', getErrMsg(1005));
