@@ -83,6 +83,12 @@ const NewShop = function (name, phone, address) {
   this.address = address;
 };
 
+//
+const getRegion = function (phone) {
+  const shopRegionCode = phone.split(' ').shift();
+  return regionCode[shopRegionCode] || regionCode['+84'];
+};
+
 NewShop.prototype.getRegion = function () {
   console.log('this new Shop ', this);
   const shopRegionCode = this.phone.split(' ').shift();
@@ -118,7 +124,54 @@ function SortedArray(array) {
   this.numbers = array ?? [];
 }
 
-SortedArray.prototype.get = function (x) {}; // return index in array, -1
-SortedArray.prototype.set = function (x) {}; // set x in the correct position
+SortedArray.prototype.get = function (x) {
+  return this.numbers.indexOf(x);
+}; // return index in array, -1
+SortedArray.prototype.set = function (x) {
+  if (this.numbers[0] >= x) {
+    this.numbers.unshift(x); //
+    return;
+  }
+  let idx = -1; //
+  for (let i = 0; i < this.numbers.length; i++) {
+    if (this.numbers[i] >= x) {
+      idx = i;
+      break;
+    }
+  }
+  if (idx === -1) {
+    idx = this.numbers.length;
+  }
+  this.numbers.splice(idx, 0, x);
+}; // set x in the correct position
 // x: 6 -> this.numbers: [1, 5, 6, 8]
-SortedArray.prototype.remove = function (x) {}; // remove x in the numbers
+SortedArray.prototype.remove = function (x) {
+  const idx = this.get(x); // O(1)
+  this.numbers.splice(idx, 1); // O(n)
+}; // remove x in the numbers
+// time
+
+const arrX = new SortedArray([1, 3, 5, 8]);
+console.log('initial Array ', arrX.numbers);
+console.log('arrX get 2: ', arrX.get(2));
+console.log('arrX get 5: ', arrX.get(5));
+arrX.set(0);
+arrX.set(9);
+arrX.set(4);
+console.log('after setting ', arrX.numbers);
+arrX.remove(5);
+console.log('after removing ', arrX.numbers);
+
+// bind, apply, call
+
+const normalObject = {
+  numbers: [3, 4, 1, 9],
+  get: function (x) {
+    return this.numbers.indexOf(x);
+  },
+};
+
+const newFn = arrX.remove.bind(normalObject);
+
+newFn(3);
+console.log('normalObject ', normalObject);
