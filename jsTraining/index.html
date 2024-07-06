@@ -4,12 +4,21 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
-	<script src="./jsthread.js"></script>
+	<!-- <script src="./jsthread.js"></script> -->
 	<!-- <script src="./oop.js"></script> -->
 	<!-- <script src="./script.js"></script> -->
 	<!-- <script src="./object.js"></script> -->
+	<script>
+
+		function changeText(hello) {
+			console.log('changeText ');
+			hello.innerHTML = 'new Text';
+		}
+	 </script>
 </head>
 <body>
-	<h1>Hello</h1>
+	<h1 onclick="changeText(this)" id="hello" class="header">Hello</h1>
+	<p class="header">Name</p>
+	<script src="./elements.js"></script>
 </body>
 </html>

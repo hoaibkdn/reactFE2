@@ -17,7 +17,13 @@ const testArrow = () => {
 testArrow();
 // new Person('Person test');
 
-const woman = {
+type Woman = {
+  name: string,
+  birthDate: string,
+  getFirstName: () => string,
+  getAge: () => number,
+};
+const woman: Woman = {
   name: 'Anna Smith',
   birthDate: '1989-02-28', // Date
   getFirstName: function () {

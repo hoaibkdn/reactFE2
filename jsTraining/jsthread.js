@@ -93,17 +93,17 @@ function fetchPost(postId) {
 
 fetchPost(3).then((post) => console.log('post 3 ', post));
 
-Promise.all([fetchUser(4000), fetchPost(5), fetchUser(5)])
-  .then((values) => console.log('all ', values))
-  .catch((error) => console.log('error ', error));
+// Promise.all([fetchUser(4000), fetchPost(5), fetchUser(5)])
+//   .then((values) => console.log('all ', values))
+//   .catch((error) => console.log('error ', error));
 
-Promise.allSettled([fetchUser(4000), fetchPost(5), fetchUser(5)])
-  .then((values) => console.log('all settled ', values)) //
-  .catch((error) => console.log('error 2 ', error));
+// Promise.allSettled([fetchUser(4000), fetchPost(5), fetchUser(5)])
+//   .then((values) => console.log('all settled ', values)) //
+//   .catch((error) => console.log('error 2 ', error));
 
-Promise.race([fetchUser(4), fetchPost(5000), fetchUser(50000)]).then((value) =>
-  console.log('race ', value)
-);
+// Promise.race([fetchUser(4), fetchPost(5000), fetchUser(50000)]).then((value) =>
+//   console.log('race ', value)
+// );
 
 // ES5
 // ES6
@@ -129,3 +129,63 @@ function splitWords(str) {
 }
 
 console.log(splitWords(str));
+
+// Homework:
+// fetchUsers (): []: https://jsonplaceholder.typicode.com/users/
+// fetchPosts (): []: https://jsonplaceholder.typicode.com/posts/
+
+/* [{
+      author: 'Ervin Howell', // userId
+      title: 'ea molestias quasi exercitationem ... ',
+      body: 'et iusto sed quo iure\nvoluptatem ...' }, { }] */
+
+async function fetchApi(path) {
+  const response = await fetch('https://jsonplaceholder.typicode.com/' + path);
+  if (response.status !== 200) {
+    throw new Error('Cannot fetch');
+  }
+  return response.json();
+}
+
+function fetchData() {
+  return Promise.all([fetchApi('users'), fetchApi('posts')]).then((value) => {
+    const [users, posts] = value; // m, n
+    // code here
+    const objUser = users.reduce((acc, user) => {
+      if (user?.id) {
+        acc[user.id] = user;
+      }
+      return acc;
+    }, {}); // O(m)
+    const convertedPosts = posts.reduce((acc, post) => {
+      // O(n)
+      // const user = users.find((user) => user.id === post.userId); // O(m)
+      const user = objUser[post.userId]; // O(1)
+      if (post) {
+        acc.push({
+          author: user.name,
+          body: post.body,
+          title: post.title,
+        });
+      }
+      return acc;
+    }, []); // O(n)
+
+    // O(m + n)
+    return convertedPosts;
+  });
+}
+
+async function fetchData2() {
+  const fetchUsers = fetchApi('users'); // Promise 500
+  const fetchPosts = fetchApi('posts'); // Promise 500
+
+  console.log('fetchUsers ', fetchUsers);
+  const usersResponse = await fetchUsers; // 500
+  const postsResponse = await fetchPosts; // 0
+  console.log('usersResponse ', usersResponse);
+  return { usersResponse, postsResponse };
+}
+
+fetchData().then((data) => console.log('data ', data));
+fetchData2().then((data) => console.log('data 2 ', data));
