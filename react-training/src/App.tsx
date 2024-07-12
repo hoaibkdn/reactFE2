@@ -1,14 +1,22 @@
 /** @format */
 
 import React, { useState, MouseEvent } from 'react';
+import Form from './components/Form';
 import logo from './logo.svg';
 import './App.css';
 
 // props
 // state
+// setState: asynchronous (batch update)
+interface Product {
+  id: number;
+  name: string;
+  quantity: number;
+}
+
 function App() {
   // functional component
-  const [products, setProducts] = useState([
+  const [products, setProducts] = useState<Product[]>([
     {
       id: 1,
       name: 'T-shirt',
@@ -23,6 +31,7 @@ function App() {
 
   const addProduct = (e: MouseEvent<HTMLButtonElement>) => {
     console.log('e ', e);
+
     setProducts([
       ...products,
       { id: Date.now(), name: 'Long Sleeve Shirt', quantity: 30 },
@@ -31,9 +40,21 @@ function App() {
 
   const reorderItem = (id: number) => {
     // code here
+
+    setProducts((prevProducts) => {
+      const productToMove = prevProducts.find((product) => product.id === id);
+      if (productToMove) {
+        const remainingProducts = prevProducts.filter(
+          (product) => product.id !== id
+        );
+        return [productToMove, ...remainingProducts];
+      }
+      return prevProducts;
+    });
   };
   return (
     <div className='App'>
+      <Form firstname='AAA' lastname='BBB' />
       <button onClick={addProduct}>Add Product</button>
       <ul>
         {products.map((product) => (
