@@ -2,6 +2,7 @@
 
 import React, { useState, MouseEvent } from 'react';
 import Form from './components/Form';
+import LoginForm from './components/LoginForm';
 import logo from './logo.svg';
 import './App.css';
 
@@ -54,7 +55,8 @@ function App() {
   };
   return (
     <div className='App'>
-      <Form firstname='AAA' lastname='BBB' />
+      <LoginForm />
+      {/* <Form firstname='AAA' lastname='BBB' /> */}
       <button onClick={addProduct}>Add Product</button>
       <ul>
         {products.map((product) => (
