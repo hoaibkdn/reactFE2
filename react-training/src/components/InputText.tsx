@@ -13,4 +13,4 @@ const InputText = ({ label, value }: InputProps) => {
   );
 };
 
-export default InputText;
+export default InputText; // 
