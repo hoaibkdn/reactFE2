@@ -1,0 +1,45 @@
+.error {
+	color: red;
+}
+
+.form {
+	width: 300px;
+	background-color: bisque;
+	margin: auto;
+	margin-top: 200px;
+	padding: 30px 15px;
+	border-radius: 5px;
+	font-size: 16px;
+}
+
+.login-input-group {
+	display: flex;
+	align-items: center;
+	text-align: left;
+	margin-bottom: 10px;
+}
+
+.login-input {
+	height: 26px;
+	border: 1px solid #c3c3c3;
+	border-radius: 5px;
+	flex: 2
+}
+
+.login-label {
+	flex: 1;
+	margin-right: 10px;
+}
+
+.submit-btn {
+	border: none;
+	background-color: chocolate;
+	color: white;
+	cursor: pointer;
+	padding: 5px 10px;
+	border-radius: 5px;
+}
+
+.submit-btn:hover {
+	background-color: brown;
+}

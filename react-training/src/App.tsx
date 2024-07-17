@@ -1,10 +1,12 @@
 /** @format */
 
-import React, { useState, MouseEvent } from 'react';
+import React, { useState, MouseEvent, useContext } from 'react';
 import Form from './components/Form';
 import LoginForm from './components/LoginForm';
+import ListPost from './components/ListPost';
 import logo from './logo.svg';
 import './App.css';
+import { AppContext } from './context';
 
 // props
 // state
@@ -17,6 +19,7 @@ interface Product {
 
 function App() {
   // functional component
+  const [displayListPost, setDisplayListPost] = useState(true);
   const [products, setProducts] = useState<Product[]>([
     {
       id: 1,
@@ -55,9 +58,17 @@ function App() {
   };
   return (
     <div className='App'>
-      <LoginForm />
+      <button onClick={() => setDisplayListPost(!displayListPost)}>
+        Toggle ListPost
+      </button>
+      <AppContext.Provider value={{ displayListPost }}>
+        <>
+          <LoginForm />
+          {displayListPost && <ListPost />}
+        </>
+      </AppContext.Provider>
       {/* <Form firstname='AAA' lastname='BBB' /> */}
-      <button onClick={addProduct}>Add Product</button>
+      {/* <button onClick={addProduct}>Add Product</button>
       <ul>
         {products.map((product) => (
           <li>
@@ -71,7 +82,7 @@ function App() {
             </button>
           </li>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 }

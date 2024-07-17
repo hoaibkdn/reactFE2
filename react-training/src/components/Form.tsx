@@ -20,6 +20,12 @@ const computeData = () => {
   return i;
 };
 
+const validateEmail = (email: string) => {
+  const re = /\S+@\S+\.\S+/;
+  return re.test(email);
+};
+// re-init
+
 const Form = ({
   firstname,
   lastname,
@@ -56,6 +62,8 @@ const Form = ({
 
   const onSubmit = (e: any) => {
     e.preventDefault(); //
+
+    validateEmail('');
 
     // if (titleRef.current) {
     //   console.log('value title ', titleRef.current.value);
