@@ -1,10 +1,21 @@
 /** @format */
 import { useState, useEffect } from 'react';
+import PostItem from './Post';
 
 interface Post {
   title: string;
   body: string;
   id: number;
+  userId: number;
+}
+
+interface User {
+  id: number;
+  name: string;
+}
+
+interface PostWithAuthor extends Post {
+  author: string;
 }
 
 const ListPost = () => {
@@ -28,28 +39,57 @@ const ListPost = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(
-        'https://jsonplaceholder.typicode.com/posts'
-      );
-      const data = await response.json();
-      setPosts(data);
+      const fetchPosts = fetch('https://jsonplaceholder.typicode.com/posts');
+      const fetchUsers = fetch('https://jsonplaceholder.typicode.com/users');
+      const responsePosts = await fetchPosts;
+      const responseUsers = await fetchUsers;
+      const posts = await responsePosts.json();
+      const users = await responseUsers.json();
 
-      console.log('data ', data);
+      // code here
+      const objUser = users.reduce(
+        (acc: { [key: number]: User }, user: User) => {
+          if (user?.id) {
+            acc[user.id] = user;
+          }
+          return acc;
+        },
+        {}
+      ); // O(m)
+      const convertedPosts = posts.reduce(
+        (acc: PostWithAuthor[], post: Post) => {
+          // O(n)
+          // const user = users.find((user) => user.id === post.userId); // O(m)
+          const user = objUser[post.userId]; // O(1)
+          if (post) {
+            acc.push({
+              ...post,
+              author: user.name,
+            });
+          }
+          return acc;
+        },
+        []
+      );
+      setPosts(convertedPosts);
+
+      console.log('data ', convertedPosts);
     }
 
     fetchData();
   }, []); // did mount
 
+  const increaseCount = () => {
+    setCount((prevCount) => prevCount + 1);
+  };
   return (
     <>
-      <h3>List posts</h3>
-      {posts.map((item: Post) => (
-        <div key={item.id}>
-          <b>{item.title}</b>
-          <p>{item.body}</p>
-        </div>
-      ))}
       <p>{count}</p>
+      <button onClick={increaseCount}>Increase</button>
+      <h3>List posts</h3>
+      {posts.map((item: PostWithAuthor) => (
+        <PostItem key={item.id} {...item} />
+      ))}
     </>
   );
 };

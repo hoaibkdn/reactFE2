@@ -3,9 +3,14 @@ import React, { useRef, useState, useCallback, useEffect } from 'react';
 import InputText from './InputText';
 import { loginValidation } from '../utils/formValidation';
 import './styles.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { AuthAction } from './../store/actions';
 
 const LoginForm = () => {
   const [errors, setErrors] = useState({ username: '', password: '' });
+  const auth = useSelector((state: any) => state.auth);
+  const dispatch = useDispatch();
+  console.log('auth ', auth);
 
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -22,6 +27,13 @@ const LoginForm = () => {
       console.log('Form submitted:', {
         username: usernameValue,
         password: passwordValue,
+      });
+      dispatch({
+        type: AuthAction.LOGIN,
+        data: {
+          username: usernameValue,
+          password: passwordValue,
+        },
       });
     }
   }, []); //
