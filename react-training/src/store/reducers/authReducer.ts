@@ -1,7 +1,9 @@
-import { AuthAction } from "../actions"
+import { AuthAction, INCREASE_COUNT } from "../actions"
 
 const initialState = {
- isLoggedIn: false	
+ isLoggedIn: false,
+ loading: 'idle',
+ count: 0,
 }
 const authReducer = (state = initialState, action: { type: string, data: any }) => {
 
@@ -12,7 +14,12 @@ const authReducer = (state = initialState, action: { type: string, data: any }) 
 				...state,
 				isLoggedIn: true 
 			}
-	
+		case INCREASE_COUNT: {
+			return {
+				...state,
+				count: state.count + (action.data?.increasedDistance || 0)
+			}
+		}
 		default:
 			break;
 	}

@@ -8,6 +8,7 @@ import logo from './logo.svg';
 import './App.css';
 import { AppContext } from './context';
 import Example from './pages/Example';
+import Tabs from './components/TabsRedux';
 
 // props
 // state
@@ -62,7 +63,8 @@ function App() {
       <button onClick={() => setDisplayListPost(!displayListPost)}>
         Toggle ListPost
       </button>
-      <Example />
+      <Tabs />
+      {/* <Example /> */}
       <AppContext.Provider value={{ displayListPost }}>
         <>
           <LoginForm />

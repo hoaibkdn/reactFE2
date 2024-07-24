@@ -1,6 +1,8 @@
 /** @format */
 import { useState, useEffect } from 'react';
 import PostItem from './Post';
+import { useSelector, useDispatch } from 'react-redux';
+import { INCREASE_COUNT } from '../store/actions';
 
 interface Post {
   title: string;
@@ -19,16 +21,19 @@ interface PostWithAuthor extends Post {
 }
 
 const ListPost = () => {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
   const [posts, setPosts] = useState([]);
   const delayTimer = setTimeout(() => {}, 1000);
+  const { count } = useSelector((state: any) => state.auth);
+  const dispatch = useDispatch();
 
+  // console.log('state ', state);
   // feature
   useEffect(() => {
     // component did update
     // component did mount
     // component will unmount
-    setCount((prevCount) => prevCount + 1);
+    // setCount((prevCount) => prevCount + 1);
 
     console.log('did mount');
     return () => {
@@ -80,7 +85,13 @@ const ListPost = () => {
   }, []); // did mount
 
   const increaseCount = () => {
-    setCount((prevCount) => prevCount + 1);
+    // setCount((prevCount) => prevCount + 1);
+    dispatch({
+      type: INCREASE_COUNT,
+      data: {
+        increasedDistance: 5,
+      },
+    });
   };
   return (
     <>
