@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react';
 import PostItem from './Post';
 import { useSelector, useDispatch } from 'react-redux';
 import { INCREASE_COUNT } from '../store/actions';
+import { useNavigate, Navigate } from 'react-router-dom';
+import { fetchPosts } from './../store/reducers/postReducer';
+import type { AppDispatch } from './../store';
 
 interface Post {
   title: string;
@@ -24,17 +27,18 @@ const ListPost = () => {
   // const [count, setCount] = useState(0);
   const [posts, setPosts] = useState([]);
   const delayTimer = setTimeout(() => {}, 1000);
-  const { count } = useSelector((state: any) => state.auth);
-  const dispatch = useDispatch();
+  const { count, isLoggedIn } = useSelector((state: any) => state.auth);
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
-  // console.log('state ', state);
+  console.log('isLoggedIn ', isLoggedIn);
   // feature
   useEffect(() => {
     // component did update
     // component did mount
     // component will unmount
     // setCount((prevCount) => prevCount + 1);
-
+    dispatch(fetchPosts());
     console.log('did mount');
     return () => {
       console.log('will unmount');
@@ -93,6 +97,10 @@ const ListPost = () => {
       },
     });
   };
+
+  if (!isLoggedIn) {
+    return <Navigate to='/login' replace={true} />;
+  }
   return (
     <>
       <p>{count}</p>

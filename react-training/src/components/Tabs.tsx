@@ -1,7 +1,8 @@
 /** @format */
 
 import React, { useState, useCallback, memo } from 'react';
-import { TABS_NUMBER } from './../constant';
+import { TABS_NUMBER, TABS_NAME } from './../constant';
+import { Link } from 'react-router-dom';
 
 const Tabs = () => {
   const [active, setActive] = useState(TABS_NUMBER.POSTS);
@@ -14,15 +15,16 @@ const Tabs = () => {
     <div>
       {[TABS_NUMBER.POSTS, TABS_NUMBER.USERS, TABS_NUMBER.SETTIMNG].map(
         (num, index) => (
-          <button
+          <Link
             key={index}
+            to={`/${num === TABS_NUMBER.POSTS ? '' : TABS_NAME[num]}`}
             style={{
               backgroundColor: active === index ? 'lightblue' : 'white',
               fontSize: '50px',
             }}
             onClick={() => handleClick(index)}>
-            {num}
-          </button>
+            {TABS_NAME[num]}
+          </Link>
         )
       )}
     </div>

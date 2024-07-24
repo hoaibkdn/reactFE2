@@ -5,11 +5,14 @@ import { loginValidation } from '../utils/formValidation';
 import './styles.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { AuthAction } from './../store/actions';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [errors, setErrors] = useState({ username: '', password: '' });
   const auth = useSelector((state: any) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   console.log('auth ', auth);
 
   const usernameRef = useRef<HTMLInputElement>(null);
@@ -35,6 +38,7 @@ const LoginForm = () => {
           password: passwordValue,
         },
       });
+      navigate('/');
     }
   }, []); //
 

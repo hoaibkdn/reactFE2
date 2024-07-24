@@ -9,6 +9,9 @@ import './App.css';
 import { AppContext } from './context';
 import Example from './pages/Example';
 import Tabs from './components/TabsRedux';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Root from './pages/Root';
+import Post from './components/Post';
 
 // props
 // state
@@ -18,6 +21,35 @@ interface Product {
   name: string;
   quantity: number;
 }
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Root />,
+    children: [
+      {
+        path: '/',
+        element: <ListPost />,
+      },
+      {
+        path: '/post/:postId',
+        element: <Post id={1} title='title' body='body' author='author' />,
+      },
+      {
+        path: '/Users',
+        element: <div>User page</div>,
+      },
+      {
+        path: '/Setting',
+        element: <div>Setting page</div>,
+      },
+    ],
+  },
+  {
+    path: '/login',
+    element: <LoginForm />,
+  },
+]);
 
 function App() {
   // functional component
@@ -60,33 +92,7 @@ function App() {
   };
   return (
     <div className='App'>
-      <button onClick={() => setDisplayListPost(!displayListPost)}>
-        Toggle ListPost
-      </button>
-      <Tabs />
-      {/* <Example /> */}
-      <AppContext.Provider value={{ displayListPost }}>
-        <>
-          <LoginForm />
-          {displayListPost && <ListPost />}
-        </>
-      </AppContext.Provider>
-      {/* <Form firstname='AAA' lastname='BBB' /> */}
-      {/* <button onClick={addProduct}>Add Product</button>
-      <ul>
-        {products.map((product) => (
-          <li>
-            <button onClick={() => reorderItem(product.id)}>
-              <p>
-                {product.name}{' '}
-                <b>
-                  <span>{product.quantity}</span>
-                </b>
-              </p>
-            </button>
-          </li>
-        ))}
-      </ul> */}
+      <RouterProvider router={router} />
     </div>
   );
 }

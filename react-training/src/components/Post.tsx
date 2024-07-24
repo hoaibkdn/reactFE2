@@ -1,5 +1,6 @@
 /** @format */
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 
 type Props = {
   id: number;
@@ -9,10 +10,22 @@ type Props = {
 };
 
 const Post = (props: Props) => {
-  // console.log('render post ', props.id);
+  const navigate = useNavigate();
+  const param = useParams();
+  // const postId = getParam('')
+  console.log('param ', param);
+
+  // const openDetail = useCallback(() => {
+  //   navigate('/post', createSearchParams({
+  //     search: id,
+  //   }));
+  // }, []);
+
   return (
-    <div key={props.id}>
-      <b>{props.title}</b>
+    <div>
+      <Link to={`/post/${props.id}`}>
+        <b>{props.title}</b>
+      </Link>
       <p>{props.body}</p>
       <b>Author: {props.author}</b>
     </div>
