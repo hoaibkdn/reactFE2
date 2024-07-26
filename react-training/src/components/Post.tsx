@@ -12,7 +12,6 @@ type Props = {
 const Post = (props: Props) => {
   const navigate = useNavigate();
   const param = useParams();
-  // const postId = getParam('')
   console.log('param ', param);
 
   // const openDetail = useCallback(() => {

@@ -11,7 +11,7 @@ import Example from './pages/Example';
 import Tabs from './components/TabsRedux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Root from './pages/Root';
-import Post from './components/Post';
+import PostDetail from './pages/PostDetail';
 
 // props
 // state
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/post/:postId',
-        element: <Post id={1} title='title' body='body' author='author' />,
+        element: <PostDetail />,
       },
       {
         path: '/Users',
