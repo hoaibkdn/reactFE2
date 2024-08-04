@@ -39,9 +39,7 @@ const initialState: {
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
-  reducers: {
-    // standard reducer logic, with auto-generated action types per reducer
-  },
+  reducers: {},
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
     builder.addCase(fetchPosts.pending, (state, action) => {
@@ -54,10 +52,12 @@ const postsSlice = createSlice({
       state.loading = 'succeed';
       console.log('action ', action);
       const postsUsers = action.payload
+
+      // normalize shape data
       for(let i = 0; i < postsUsers.length; i++) {
         const post = postsUsers[i] 
         if(!state.data[post.id])  {
-          state.data[post.id] = post
+          state.data[post.id] = post 
           state.ids.push(post.id)
         }
       }

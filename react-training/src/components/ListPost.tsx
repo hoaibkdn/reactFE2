@@ -26,6 +26,7 @@ interface PostWithAuthor extends Post {
 
 const ListPost = () => {
   const { count, isLoggedIn } = useSelector((state: any) => state.auth);
+  console.log('isLoggedIn ', isLoggedIn);
   const { data: posts, loading, ids } = useApi(fetchPosts);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -51,9 +52,13 @@ const ListPost = () => {
       <p>{count}</p>
       <button onClick={increaseCount}>Increase</button>
       <h3>List posts</h3>
-      {ids.map((id: PostWithAuthor['id']) => (
-        <PostItem key={id} {...posts[id]} />
-      ))}
+      {ids.map(
+        (
+          id: PostWithAuthor['id'] // [111, 112, 113]
+        ) => (
+          <PostItem key={id} {...posts[id]} /> // post[111]
+        )
+      )}
     </>
   );
 };

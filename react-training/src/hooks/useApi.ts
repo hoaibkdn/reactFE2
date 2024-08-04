@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import type { AppDispatch } from './../store';
-import { fetchPosts } from './../store/reducers/postReducer';
 
 export const useApi = (fetchFunction: Function) => {
   const delayTimer = setTimeout(() => {}, 1000);
@@ -16,14 +15,12 @@ export const useApi = (fetchFunction: Function) => {
     // component did update
     // component did mount
     // component will unmount
-    // setCount((prevCount) => prevCount + 1);
     dispatch(fetchFunction(params.postId));
-    console.log('did mount');
     return () => {
-      console.log('will unmount');
+      // 'will unmount';
       clearTimeout(delayTimer);
     };
-  }, []); // did mount
+  }, []); // []: did mount
 
   return stateData
 };

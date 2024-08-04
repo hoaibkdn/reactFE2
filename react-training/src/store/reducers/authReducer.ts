@@ -1,29 +1,25 @@
 import { AuthAction, INCREASE_COUNT } from "../actions"
+import { createSlice } from "@reduxjs/toolkit"
+
 
 const initialState = {
  isLoggedIn: false,
  loading: 'idle',
  count: 0,
 }
-const authReducer = (state = initialState, action: { type: string, data: any }) => {
 
-	switch (action.type) {
-		case AuthAction.LOGIN:
-			console.log('action ', action)
-			return {
-				...state,
-				isLoggedIn: true 
-			}
-		case INCREASE_COUNT: {
-			return {
-				...state,
-				count: state.count + (action.data?.increasedDistance || 0)
-			}
-		}
-		default:
-			break;
+const authSlice = createSlice({
+	name: 'auth',
+	initialState,
+	reducers: {},
+	extraReducers: (builder) => {
+		builder.addCase(AuthAction.LOGIN, (state, action) => {
+			state.isLoggedIn = true
+		})
+		builder.addCase(INCREASE_COUNT, (state, action) => {
+			state.count += 1
+		})
 	}
-	return state
-}
-
+})
+const authReducer = authSlice.reducer
 export default authReducer

@@ -12,7 +12,6 @@ type Props = {
 const Post = (props: Props) => {
   const navigate = useNavigate();
   const param = useParams();
-  console.log('param ', param);
 
   // const openDetail = useCallback(() => {
   //   navigate('/post', createSearchParams({

@@ -6,6 +6,7 @@ import './styles.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { AuthAction } from './../store/actions';
 import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 const LoginForm = () => {
   const [errors, setErrors] = useState({ username: '', password: '' });
@@ -51,10 +52,12 @@ const LoginForm = () => {
         ref={passwordRef}
         error={errors.password}
       />
-
-      <button className='submit-btn' type='submit'>
+      <Button variant='contained' color='success' type='submit'>
         Login
-      </button>
+      </Button>
+      {/* <button className='submit-btn' type='submit'>
+        Login
+      </button> */}
     </form>
   );
 };
