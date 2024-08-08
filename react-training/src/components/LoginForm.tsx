@@ -19,6 +19,12 @@ const LoginForm = () => {
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    if (auth.isLoggedIn) {
+      navigate('/');
+    }
+  }, [auth.isLoggedIn, navigate]);
+
   console.log('form login ');
   const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
@@ -32,14 +38,15 @@ const LoginForm = () => {
         username: usernameValue,
         password: passwordValue,
       });
-      dispatch({
-        type: AuthAction.LOGIN,
-        data: {
-          username: usernameValue,
-          password: passwordValue,
-        },
-      });
-      navigate('/');
+      // dispatch({
+      //   type: AuthAction.LOGIN,
+      //   data: {
+      //     username: usernameValue,
+      //     password: passwordValue,
+      //   },
+      // });
+      dispatch(fetchAuth({ username: usernameValue, password: passwordValue }));
+      // navigate('/');
     }
   }, []); //
 
@@ -52,8 +59,12 @@ const LoginForm = () => {
         ref={passwordRef}
         error={errors.password}
       />
-      <Button variant='contained' color='success' type='submit'>
-        Login
+      <Button
+        disabled={auth.loading === 'pending'}
+        variant='contained'
+        color='success'
+        type='submit'>
+        {auth.loading === 'pending' ? 'Loading....' : 'Login'}
       </Button>
       {/* <button className='submit-btn' type='submit'>
         Login

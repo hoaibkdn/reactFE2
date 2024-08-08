@@ -69,6 +69,7 @@ const postsSlice = createSlice({
       state.loading = 'rejected'
     })
     builder.addCase(fetchPostDetail.fulfilled, (state, action) => {
+      console.log('action post detail ', action)
       state.loading = 'succeed'
       state.detail = action.payload
     })
